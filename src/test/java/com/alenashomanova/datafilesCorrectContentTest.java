@@ -81,6 +81,7 @@ public class datafilesCorrectContentTest {
     }
 
     @Test
+    @Description("Confirms that .json data about our pokemon is correct")
     void verifyCorrectPokemonTest() throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         try (InputStream is = cl.getResourceAsStream("minun-pokemon.json");
