@@ -1,10 +1,8 @@
-// TO DO:
-// 1. Make a JSON TEST.
-
 package com.alenashomanova;
 
 import com.codeborne.pdftest.PDF;
 import com.codeborne.xlstest.XLS;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -81,5 +78,24 @@ public class datafilesCorrectContentTest {
                 }
             }
         }
+    }
+
+    @Test
+    void verifyCorrectPokemonTest() throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        try (InputStream is = cl.getResourceAsStream("minun-pokemon.json");
+             InputStreamReader isr = new InputStreamReader(is)) {
+            Pokemon pokemon = mapper.readValue(isr, Pokemon.class);
+
+            Assertions.assertEquals("Minun", pokemon.name);
+            Assertions.assertTrue(pokemon.isPokemon);
+            Assertions.assertEquals(312, pokemon.index);
+            Assertions.assertEquals("Electric", pokemon.type);
+            Assertions.assertEquals("Thunder Punch", pokemon.strongestAttack.attackname);
+            Assertions.assertEquals(75, pokemon.strongestAttack.power);
+            Assertions.assertArrayEquals(new String[] {"Hoenn", "Central Kalos"}, pokemon.pokedexes);
+        }
+
+
     }
 }

@@ -1,0 +1,11 @@
+{
+  "name": "Minun",
+  "isPokemon": true,
+  "index": 312,
+  "type": "Electric",
+  "pokedexes": ["Hoenn", "Central Kalos"],
+  "strongestAttack": {
+    "attackname": "Thunder Punch",
+    "power": 75
+  }
+}
