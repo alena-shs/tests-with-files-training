@@ -23,15 +23,15 @@ public class datafilesCorrectContentTest {
         try (InputStream is = cl.getResourceAsStream("datafiles.zip");
              ZipInputStream zs = new ZipInputStream(is)) {
             ZipEntry entry;
-            boolean accepted = false;
+            boolean found = false;
             while ((entry = zs.getNextEntry()) != null) {
                 if (entry.getName().equals("junit-user-guide-5.9.2.pdf")) {
+                    found = true;
                     PDF pdf = new PDF(zs);
                     Assertions.assertEquals("JUnit 5 User Guide", pdf.title);
-                    accepted = true;
                 }
             }
-            if ((entry == null) && (accepted != true)) {
+            if (!found) {
                 Assertions.fail("File wasn't found");
             }
         }
@@ -43,9 +43,10 @@ public class datafilesCorrectContentTest {
         try (InputStream is = cl.getResourceAsStream("datafiles.zip");
              ZipInputStream zs = new ZipInputStream(is)) {
             ZipEntry entry;
-            boolean accepted = false;
+            boolean found = false;
             while ((entry = zs.getNextEntry()) != null) {
                 if (entry.getName().equals("file_example.xls")) {
+                    found = true;
                     XLS xls = new XLS(zs);
                     Assertions.assertEquals("First Name", xls.excel.getSheetAt(0).getRow(0).getCell(1).toString());
                     Assertions.assertEquals("Last Name", xls.excel.getSheetAt(0).getRow(0).getCell(2).toString());
@@ -54,10 +55,9 @@ public class datafilesCorrectContentTest {
                     Assertions.assertEquals("Age", xls.excel.getSheetAt(0).getRow(0).getCell(5).toString());
                     Assertions.assertEquals("Date", xls.excel.getSheetAt(0).getRow(0).getCell(6).toString());
                     Assertions.assertEquals("Id", xls.excel.getSheetAt(0).getRow(0).getCell(7).toString());
-                    accepted = true;
                 }
             }
-            if ((entry == null) && (accepted != true)) {
+            if (!found) {
                 Assertions.fail("File wasn't found");
             }
         }
@@ -70,16 +70,16 @@ public class datafilesCorrectContentTest {
         try (InputStream is = cl.getResourceAsStream("datafiles.zip");
              ZipInputStream zs = new ZipInputStream(is)) {
             ZipEntry entry;
-            boolean accepted = false;
+            boolean found = false;
             while ((entry = zs.getNextEntry()) != null) {
                 if (entry.getName().equals("people-100.csv")) {
+                    found = true;
                     CSVReader csvReader = new CSVReader(new InputStreamReader(zs));
                     List<String[]> string = csvReader.readAll();
                     Assertions.assertArrayEquals(new String[]{"Index", "User Id", "First Name", "Last Name", "Sex", "Email", "Phone", "Date of birth", "Job Title"}, string.get(0));
-                    accepted = true;
                 }
             }
-            if ((entry == null) && (accepted != true)) {
+            if (!found) {
                 Assertions.fail("File wasn't found");
             }
         }
